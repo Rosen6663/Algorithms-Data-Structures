@@ -178,7 +178,6 @@ void changeStu(Students &head)
 	}
 	
 }
-//查询学生信息 
 void selectStu(Students head)
 {
 		char str[20];
