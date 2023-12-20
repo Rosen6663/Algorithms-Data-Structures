@@ -6,6 +6,46 @@ typedef struct BiTNode{
 	struct BiTNode *lchild,*rchild;
 	int ltag,rtag;
 }BiTNode,*BiTree;
+BiTNode *pre=NULL;
+
+void visit(BiTNode *q)
+{
+	//先设置前驱
+	if(q->lchild==NULL)
+	{
+		q->lchild=pre;
+		q->ltag=1;
+	}
+	//设置后继
+	if(pre!=NULL&&pre->rchild==NULL)
+	{
+		pre->rchild=q;
+		pre->rtag=1;
+	}
+	pre=q;
+}
+void InThread(BiTree T)
+{
+	if(T!=NULL)
+	{
+		InThread(T->lchild);
+		visit(T);
+		InThread(T->rchild);
+	}
+}
+void preorder(BiTree T)
+{
+    if(T!=NULL){
+
+    
+        //printf("%d\n",T->data);
+        preorder(T->lchild);
+        printf("%c ",T->data);
+        preorder(T->rchild);
+        //printf("%d\n",T->data);
+    }
+}
+
 //创建根节点 
 void InitBiTree(BiTree &root)
 {
@@ -15,6 +55,9 @@ void InitBiTree(BiTree &root)
 	root->lchild=NULL;
 	root->rchild=NULL;
 }
+
+
+
 
 int main()
 {
@@ -59,5 +102,8 @@ int main()
 	printf("%c\n",root->rchild->lchild->data);
 	
 	//二叉树的线索化 
-	
+	preorder(root);
+
+	InThread(root);
+	preorder(root);
 } 
